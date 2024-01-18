@@ -1,6 +1,6 @@
 {
-    "name": "web_tool",
-    "short_name": "web_tool",
+    "name": "gvb_charge",
+    "short_name": "gvb_charge",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
