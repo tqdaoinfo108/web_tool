@@ -13,8 +13,11 @@ import '../../share/colors.dart';
 import '../../share/radius.dart';
 import '../../share/text_style.dart';
 import '../profile/profile_page.dart';
+import 'history_page.dart';
 
 class HomePage extends GetView<HomeController> {
+  const HomePage({super.key});
+
   Widget buildBodyHome() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -42,9 +45,9 @@ class HomePage extends GetView<HomeController> {
               margin: const EdgeInsets.only(bottom: 20),
               child: CarouselSlider(
                 options: CarouselOptions(
-                    height: 170,
+                    height: 200,
                     autoPlay: false,
-                    viewportFraction: 0.8,
+                    viewportFraction: 0.93,
                     enlargeCenterPage: true,
                     enlargeFactor: 0,
                     initialPage: 0),
@@ -52,7 +55,7 @@ class HomePage extends GetView<HomeController> {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.99,
                           margin: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 10),
                           padding: const EdgeInsets.all(20),
@@ -63,7 +66,7 @@ class HomePage extends GetView<HomeController> {
                             children: [
                               Text(
                                   '70 Đ. Lữ Gia, Phường 15, Quận 11, Thành phố Hồ Chí Minh 70000',
-                                  style: textLarge()),
+                                  style: smallTextStyle),
                               const SizedBox(height: 10),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,15 +77,15 @@ class HomePage extends GetView<HomeController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Lữ gia Plaza', style: textNormal()),
+                                      Text('Lữ gia Plaza',
+                                          style: xSmallTextStyle),
                                       const SizedBox(height: 4),
                                       Row(
                                         children: [
                                           const Icon(Icons.brightness_1,
                                               color: Colors.green),
                                           const SizedBox(width: 8),
-                                          Text("Mở cửa",
-                                              style: textNormal(isBold: true))
+                                          Text("Mở cửa", style: xSmallTextStyle)
                                         ],
                                       )
                                     ],
@@ -119,6 +122,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
       buildBodyHome(),
+      const HistoryPage(),
       const ProfilePage(),
     ];
 
@@ -151,8 +155,7 @@ class HomePage extends GetView<HomeController> {
               ),
             ),
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           bottomNavigationBar: getFooter(),
         ));
   }
@@ -160,6 +163,7 @@ class HomePage extends GetView<HomeController> {
   Widget getFooter() {
     List<IconData> iconItems = [
       CupertinoIcons.home,
+      CupertinoIcons.arrow_up_arrow_down,
       CupertinoIcons.person,
     ];
     return AnimatedBottomNavigationBar(
@@ -169,7 +173,7 @@ class HomePage extends GetView<HomeController> {
         inactiveColor: black.withOpacity(0.5),
         activeIndex: controller.pageIndex.value,
         iconSize: 25,
-        gapLocation: GapLocation.center,
+        gapLocation: GapLocation.end,
         notchSmoothness: NotchSmoothness.smoothEdge,
         elevation: 1,
         onTap: (index) {

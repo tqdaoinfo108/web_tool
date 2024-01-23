@@ -7,7 +7,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScanPage extends GetView<QRScanController> {
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

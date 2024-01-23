@@ -6,6 +6,8 @@ import '../../share/colors.dart';
 import '../home/home_page.dart';
 
 class LoginPage extends GetView<LoginController> {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     Widget getBody() {
@@ -175,7 +177,7 @@ class LoginPage extends GetView<LoginController> {
     }
 
     return Scaffold(
-      backgroundColor: primary,
+      backgroundColor: bgColor,
       body: getBody(),
     );
   }

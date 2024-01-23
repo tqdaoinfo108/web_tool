@@ -1,8 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import '../../share/colors.dart';
@@ -18,7 +16,6 @@ class ProfilePage extends StatefulWidget {
 class _DailyPageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return SafeArea(
         child: SingleChildScrollView(
       child: Column(
@@ -42,55 +39,65 @@ class _DailyPageState extends State<ProfilePage> {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Nguyễn Tuấn Vũ",
+                          style: mediumTextStyle.copyWith(color: mainFontColor),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(CupertinoIcons.eye_slash_fill,
+                                color: grey),
+                            const SizedBox(width: 10),
+                            Text("***********", style: smallTextStyle),
+                            const SizedBox(width: 20),
+                            GestureDetector(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(25),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: grey.withOpacity(0.03),
+                                        spreadRadius: 10,
+                                        blurRadius: 3,
+                                        // changes position of shadow
+                                      ),
+                                    ]),
+                                child: Row(
+                                  children: [
+                                    const Icon(CupertinoIcons.add_circled),
+                                    const SizedBox(width: 8),
+                                    Text("Nộp tiền", style: smallTextStyle),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                     Container(
-                      width: 70,
-                      height: 70,
+                      width: 60,
+                      height: 60,
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: AssetImage("assets/images/logo.png"),
+                              image: NetworkImage(
+                                  "https://lumiere-a.akamaihd.net/v1/images/a_avatarpandorapedia_neytiri_16x9_1098_01_0e7d844a.jpeg?region=240%2C0%2C1440%2C1080"),
                               fit: BoxFit.cover)),
                     ),
-                    const SizedBox(width: 20),
-                    SizedBox(
-                      width: (size.width - 40) * 0.6,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Nguyễn Tuấn Vũ",
-                            style: textLarge20(),
-                          ),
-                          const SizedBox(width: 10),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: green,
-                            ),
-                            child: Text("Đã xác minh",
-                                style: textNormal(color: white)),
-                          ),
-                          // const SizedBox(height: 5),
-                          // Row(
-                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                          //   children: [
-                          //     const Icon(CupertinoIcons.eye_slash_fill,
-                          //         color: grey),
-                          //     const SizedBox(width: 10),
-                          //     Text("***********",
-                          //         style: textNormal(isBold: true))
-                          //   ],
-                          // )
-                        ],
-                      ),
-                    )
                   ],
                 ),
-               
               ],
             ),
           ),
@@ -104,7 +111,9 @@ class _DailyPageState extends State<ProfilePage> {
                   children: [
                     Row(
                       children: [
-                        Text("Cài đặt", style: textLarge20()),
+                        Text("Cài đặt",
+                            style:
+                                mediumTextStyle.copyWith(color: mainFontColor)),
                       ],
                     )
                   ],
@@ -134,27 +143,41 @@ class _DailyPageState extends State<ProfilePage> {
                   ListTile(
                       leading:
                           const Icon(CupertinoIcons.creditcard, color: primary),
-                      title: Text("Nộp tiền", style: textNormal()),
+                      title: Text("Nộp tiền", style: xSmallTextStyle),
                       trailing: const Icon(Icons.arrow_forward_ios_rounded,
                           color: arrowbgColor)),
                   ListTile(
                       leading: const Icon(CupertinoIcons.person_circle,
                           color: primary),
-                      title: Text("Thông tin tài khoản", style: textNormal()),
+                      title:
+                          Text("Thông tin tài khoản", style: xSmallTextStyle),
                       trailing: const Icon(Icons.arrow_forward_ios_rounded,
                           color: arrowbgColor)),
                   ListTile(
                       leading: const Icon(CupertinoIcons.phone_circle,
                           color: primary),
-                      title: Text("Liên hệ", style: textNormal()),
+                      title: Text("Liên hệ", style: xSmallTextStyle),
                       trailing: const Icon(Icons.arrow_forward_ios_rounded,
                           color: arrowbgColor)),
                   ListTile(
                       leading: const Icon(CupertinoIcons.book_circle,
                           color: primary),
-                      title: Text("Câu hỏi thường gặp", style: textNormal()),
+                      title: Text("Câu hỏi thường gặp", style: xSmallTextStyle),
                       trailing: const Icon(Icons.arrow_forward_ios_rounded,
                           color: arrowbgColor)),
+                  ListTile(
+                      onTap: () {
+                        Get.toNamed("/login");
+                      },
+                      leading: const Icon(CupertinoIcons.delete_right,
+                          color: primary),
+                      title: Text("Đăng xuất", style: xSmallTextStyle),
+                      trailing: const Icon(Icons.arrow_forward_ios_rounded,
+                          color: arrowbgColor)),
+                  const SizedBox(height: 10),
+                  Container(
+                      alignment: Alignment.centerRight,
+                      child: Text("Phiên bản 1.0.0", style: xXSmallTextStyle))
                 ],
               ),
             ),
@@ -169,12 +192,14 @@ class _DailyPageState extends State<ProfilePage> {
                   children: [
                     Row(
                       children: [
-                        Text("Lịch sử gần nhất", style: textLarge20()),
+                        Text("Lịch sử gần nhất", style: mediumTextStyle),
                       ],
                     )
                   ],
                 ),
-                Text("Xem tất cả", style: textNormal(isBold: true)),
+                Text("Xem tất cả",
+                    style:
+                        smallTextStyle.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -231,17 +256,17 @@ class _DailyPageState extends State<ProfilePage> {
                                     children: [
                                       Text(
                                         "Thanh toán tại Lữ gia",
-                                        style: textLarge(),
+                                        style: smallTextStyle,
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
                                         "15:03 22/01/2024",
-                                        style: textSmall(),
+                                        style: xSmallTextStyle,
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
                                         "Số dư ví: **********",
-                                        style: textSmall(),
+                                        style: xSmallTextStyle,
                                       ),
                                     ]),
                               ),
@@ -252,7 +277,8 @@ class _DailyPageState extends State<ProfilePage> {
                                   children: [
                                     Text(
                                       "-200.000đ",
-                                      style: textNormal(isBold: true),
+                                      style: smallTextStyle.copyWith(
+                                          fontWeight: FontWeight.bold),
                                     )
                                   ],
                                 ),
@@ -315,17 +341,17 @@ class _DailyPageState extends State<ProfilePage> {
                                     children: [
                                       Text(
                                         "Nạp tiền vào từ chi nhánh Lữ gia",
-                                        style: textLarge(),
+                                        style: smallTextStyle,
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
                                         "15:03 22/01/2024",
-                                        style: textSmall(),
+                                        style: xSmallTextStyle,
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
                                         "Số dư ví: **********",
-                                        style: textSmall(),
+                                        style: xSmallTextStyle,
                                       ),
                                     ]),
                               ),
@@ -336,7 +362,8 @@ class _DailyPageState extends State<ProfilePage> {
                                   children: [
                                     Text(
                                       "+200.000đ",
-                                      style: textNormal(isBold: true),
+                                      style: smallTextStyle.copyWith(
+                                          fontWeight: FontWeight.bold),
                                     )
                                   ],
                                 ),
@@ -399,17 +426,17 @@ class _DailyPageState extends State<ProfilePage> {
                                     children: [
                                       Text(
                                         "Nạp tiền vào từ chi nhánh Lữ gia",
-                                        style: textLarge(),
+                                        style: smallTextStyle,
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
                                         "15:03 22/01/2024",
-                                        style: textSmall(),
+                                        style: xSmallTextStyle,
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
                                         "Số dư ví: **********",
-                                        style: textSmall(),
+                                        style: xSmallTextStyle,
                                       ),
                                     ]),
                               ),
@@ -418,14 +445,14 @@ class _DailyPageState extends State<ProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "THẤT BẠI",
-                                      style:
-                                          textNormal(isBold: true, color: red),
-                                    ),
+                                    Text("THẤT BẠI",
+                                        style: smallTextStyle.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: red)),
                                     Text(
                                       "+200.000đ",
-                                      style: textNormal(isBold: true),
+                                      style: smallTextStyle.copyWith(
+                                          fontWeight: FontWeight.bold),
                                     )
                                   ],
                                 ),
@@ -442,7 +469,8 @@ class _DailyPageState extends State<ProfilePage> {
                 ),
               ],
             ),
-          )
+          ),
+          const SizedBox(height: 40)
         ],
       ),
     ));
