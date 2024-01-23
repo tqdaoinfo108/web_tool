@@ -1,7 +1,9 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 import '../../share/colors.dart';
 import '../../share/text_style.dart';
@@ -24,6 +26,8 @@ class _DailyPageState extends State<ProfilePage> {
           Container(
             margin:
                 const EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 10),
+            padding:
+                const EdgeInsets.only(top: 20, bottom: 25, right: 20, left: 20),
             decoration: BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.circular(25),
@@ -35,66 +39,59 @@ class _DailyPageState extends State<ProfilePage> {
                     // changes position of shadow
                   ),
                 ]),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, bottom: 25, right: 20, left: 20),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 70,
-                        height: 70,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/logo.png"),
-                                fit: BoxFit.cover)),
-                      ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: (size.width - 40) * 0.6,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Nguyễn Tuấn Vũ",
-                                  style: textLarge20(),
-                                ),
-                                const SizedBox(width: 10),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: green,
-                                  ),
-                                  child: Text("Đã xác minh",
-                                      style: textNormal(color: white)),
-                                ),
-                              ],
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 70,
+                      height: 70,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/logo.png"),
+                              fit: BoxFit.cover)),
+                    ),
+                    const SizedBox(width: 20),
+                    SizedBox(
+                      width: (size.width - 40) * 0.6,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Nguyễn Tuấn Vũ",
+                            style: textLarge20(),
+                          ),
+                          const SizedBox(width: 10),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: green,
                             ),
-                            const SizedBox(height: 5),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(CupertinoIcons.eye_slash_fill,
-                                    color: grey),
-                                const SizedBox(width: 10),
-                                Text("***********",
-                                    style: textNormal(isBold: true))
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+                            child: Text("Đã xác minh",
+                                style: textNormal(color: white)),
+                          ),
+                          // const SizedBox(height: 5),
+                          // Row(
+                          //   crossAxisAlignment: CrossAxisAlignment.center,
+                          //   children: [
+                          //     const Icon(CupertinoIcons.eye_slash_fill,
+                          //         color: grey),
+                          //     const SizedBox(width: 10),
+                          //     Text("***********",
+                          //         style: textNormal(isBold: true))
+                          //   ],
+                          // )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+               
+              ],
             ),
           ),
           const SizedBox(height: 10),
