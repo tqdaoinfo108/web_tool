@@ -18,17 +18,17 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return ListView.builder(
         itemBuilder: (context, i) {
-          return Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Pressable(
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Stack(
+              children: [
+                Pressable(
                   padding: const EdgeInsets.all(20),
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(6.r),
                   backgroundColor: white,
                   onPress: () {},
-                  enabled: false,
+                  enabled: true,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -41,68 +41,48 @@ class _HistoryPageState extends State<HistoryPage> {
                       //     ],
                       //   ),
                       // ),
-                      SizedBox(height: 1.0.h),
+                      const SizedBox(height: 10),
+                      Text("Lữ gia plaza", style: mediumTextStyle),
+                      const SizedBox(height: 10),
                       Text(
-                        "33333333333",
-                        style: mediumTextStyle,
-                      ),
-                      SizedBox(height: 1.0.h),
+                          "70 Đ. Lữ Gia, Phường 15, Quận 11, Thành phố Hồ Chí Minh 70000",
+                          style: smallTextStyle),
+                      const SizedBox(height: 5),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(
-                              flex: 0,
-                              child: Icon(
-                                Icons.phone,
-                                color: arrowBackColor,
-                                size: 5.0.w,
-                              )),
-                          SizedBox(width: 2.0.h),
-                          Text(
-                            "4444444444444444444",
-                            style: smallTextStyle,
-                          )
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.location_city,
-                            color: arrowBackColor,
-                            size: 5.0.w,
-                          ),
-                          SizedBox(width: 2.0.h),
-                          Text(
-                            "555" + " km",
-                            style: xSmallTextStyle,
-                          ),
+                          Text("15:03 29/12/2023", style: xSmallTextStyle),
+                          const SizedBox(width: 10),
+                          const Icon(CupertinoIcons.clock,
+                              size: 18, color: Color(0xFF767D88)),
+                          const SizedBox(width: 4),
+                          Text("30 phút", style: xSmallTextStyle),
                         ],
                       ),
                     ],
                   ),
                 ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-                  decoration: BoxDecoration(
-                      color: Colors.green[400],
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(2.0.h),
-                        bottomLeft: Radius.circular(8),
-                      ) // green shaped
-                      ),
-                  child: Text(
-                    "-" + (100).toString() + "%",
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                    decoration: BoxDecoration(
+                        color: Colors.green[400],
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(2.0.h),
+                          bottomLeft: Radius.circular(8),
+                        ) // green shaped
+                        ),
+                    child: Text(
+                      "#1029237523823",
+                      style: smallTextStyle,
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           );
         },
         itemCount: 10);
