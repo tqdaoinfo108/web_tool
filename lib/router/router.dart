@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import '../pages/login/login_page.dart';
 
 get pageList => [
-      GetPage(name: '/home', page: () => HomePage(), binding: HomeBinding()),
-      GetPage(name: '/login', page: () => LoginPage(), binding: LoginBinding()),
+      GetPage(name: '/home', page: () => const HomePage(), binding: HomeBinding()),
+      GetPage(name: '/login', page: () => const LoginPage(), binding: LoginBinding()),
       GetPage(
           name: '/qr_scan', page: () => QRScanPage(), binding: QRScanBinding()),
     ];

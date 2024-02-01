@@ -2,24 +2,47 @@
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:gvb_charge/model/user_model.dart';
+import 'package:gvb_charge/share/constant.dart';
 // ignore: unused_import
 import 'package:latlong2/latlong.dart';
+
+import '../../model/parking_model.dart';
+import '../../service/http_client.dart';
+import '../../share/c_getx_controller.dart';
 
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<HomeController>(() => HomeController(Get.find()));
   }
 }
 
-class HomeController extends GetxController {
+class HomeController extends GetXControllerCustom {
   RxInt pageIndex = 0.obs;
   MapController mapController = MapController();
+
+  Rx<UserModel?> userData = Rx<UserModel?>(null);
+  RxList<ParkingModel> listPark = RxList();
+
+  final HttpClient _httpClient;
+  HomeController(this._httpClient);
 
   @override
   void onInit() {
     super.onInit();
     // initMap();
+    isLoading.value = true;
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    isLoading.value = true;
+
+    Future.wait([getUserProfile(), getListPark()]).then((value) {
+      isLoading.value = false;
+    });
   }
 
   initMap() async {
@@ -34,6 +57,15 @@ class HomeController extends GetxController {
   setTabs(index) {
     pageIndex.value = index;
     update();
+  }
+
+  Future getUserProfile() async {
+    userData.value = (await _httpClient.getProfile()).body?.data;
+  }
+
+  Future getListPark() async {
+    listPark.value =
+        (await _httpClient.getListPark("", 1, 1000)).body?.data ?? [];
   }
 
   Future<Position> _determinePosition() async {
