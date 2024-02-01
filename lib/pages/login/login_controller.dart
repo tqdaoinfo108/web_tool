@@ -5,11 +5,13 @@ import 'package:gvb_charge/service/http_client.dart';
 
 import '../../share/c_getx_controller.dart';
 
-class LoginBinding extends Bindings {
+class LoginBinding extends Binding {
   @override
-  void dependencies() {
-    Get.lazyPut<HttpClient>(() => HttpClient());
-    Get.lazyPut<LoginController>(() => LoginController(Get.find()));
+  List<Bind> dependencies() {
+    return [
+      Bind.lazyPut<HttpClient>(() => HttpClient()),
+      Bind.lazyPut<LoginController>(() => LoginController(Get.find())),
+    ];
   }
 }
 
@@ -36,9 +38,9 @@ class LoginController extends GetXControllerCustom {
   @override
   void onReady() {
     super.onReady();
-    isLoading.value = true;
+    isLoading.value = UserModel.getUSerID != 0;
     if (UserModel.getUSerID != 0) {
-      Get.toNamed("/home");
+      Get.offAndToNamed("/home");
       isLoading.value = false;
     }
   }

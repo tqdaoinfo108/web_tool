@@ -1,4 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -11,19 +12,23 @@ import '../../model/parking_model.dart';
 import '../../service/http_client.dart';
 import '../../share/c_getx_controller.dart';
 
-class HomeBinding extends Bindings {
+class HomeBinding extends Binding {
   @override
-  void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController(Get.find()));
+  List<Bind> dependencies() {
+    return [
+      Bind.lazyPut<HomeController>(() => HomeController(Get.find())),
+    ];
   }
 }
 
-class HomeController extends GetXControllerCustom {
+class HomeController extends GetXControllerCustom
+    with GetTickerProviderStateMixin {
   RxInt pageIndex = 0.obs;
-  MapController mapController = MapController();
+  late MapController mapController;
 
   Rx<UserModel?> userData = Rx<UserModel?>(null);
-  RxList<ParkingModel> listPark = RxList();
+  RxList<ParkingModel> listPark = RxList([]);
+  RxList<Marker> listMarker = RxList([]);
 
   final HttpClient _httpClient;
   HomeController(this._httpClient);
@@ -31,18 +36,20 @@ class HomeController extends GetXControllerCustom {
   @override
   void onInit() {
     super.onInit();
-    // initMap();
-    isLoading.value = true;
+    mapController = MapController();
+    init();
   }
 
   @override
   void onReady() {
     super.onReady();
-    isLoading.value = true;
+    initMap();
+  }
 
-    Future.wait([getUserProfile(), getListPark()]).then((value) {
-      isLoading.value = false;
-    });
+  init() async {
+    isLoading.value = true;
+    await Future.wait([getUserProfile(), getListPark()]);
+    isLoading.value = false;
   }
 
   initMap() async {
@@ -66,6 +73,19 @@ class HomeController extends GetXControllerCustom {
   Future getListPark() async {
     listPark.value =
         (await _httpClient.getListPark("", 1, 1000)).body?.data ?? [];
+
+    for (var item in listPark.value) {
+      listMarker.value.add(
+        Marker(
+            point: item.getLatLng,
+            width: 48,
+            height: 48,
+            child: Image.asset("assets/images/f.png")),
+      );
+    }
+
+    listPark.refresh();
+    listMarker.refresh();
   }
 
   Future<Position> _determinePosition() async {
@@ -95,5 +115,11 @@ class HomeController extends GetXControllerCustom {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  // profile
+  RxBool isHideMoney = true.obs;
+  onChangeHidMoney() {
+    isHideMoney.value = !isHideMoney.value;
   }
 }

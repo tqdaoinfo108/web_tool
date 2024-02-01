@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: GoogleFonts.poppins().fontFamily,
+          
         ),
         getPages: pageList,
         initialRoute: "/login",
-        initialBinding: LoginBinding(),
       ),
     );
   }

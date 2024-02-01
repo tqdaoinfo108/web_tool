@@ -27,40 +27,43 @@ class HomePage extends GetView<HomeController> {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            FlutterMap(
-              mapController: controller.mapController,
-              options: const MapOptions(
-                initialCenter: LatLng(51.5, -0.09),
-                initialZoom: 17,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-                  evictErrorTileStrategy: EvictErrorTileStrategy.none,
-                  errorTileCallback: (tile, error, stackTrace) {},
-                )
-              ],
-            ),
+            Obx(() => FlutterMap(
+                  mapController: controller.mapController,
+                  options: const MapOptions(
+                    initialCenter: LatLng(10.771423, 106.698471),
+                    initialZoom: 17,
+                  ),
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          'https://api.mapbox.com/styles/v1/tranquocdao108/cl7ej62u7000015mt54hc1a1c/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidHJhbnF1b2NkYW8xMDgiLCJhIjoiY2swZjQ2dWxzMDcwNTNtbXh1OXVwbGwyayJ9.zd_7KBxex95xUOMBJl7ISA',
+                      userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                      // Use the recommended flutter_map_cancellable_tile_provider package to
+                      // support the cancellation of loading tiles.
+                    ),
+                    MarkerLayer(markers: controller.listMarker.value),
+                  ],
+                )),
             Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              child: CarouselSlider(
-                options: CarouselOptions(
-                    height: 200,
-                    autoPlay: false,
-                    viewportFraction: 0.93,
-                    enlargeCenterPage: true,
-                    enlargeFactor: 0,
-                    initialPage: 0),
-                items: controller.listPark.value.map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return ParkCellItem(i);
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Obx(
+                  () => CarouselSlider(
+                    options: CarouselOptions(
+                        height: 200,
+                        autoPlay: false,
+                        viewportFraction: 0.93,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0,
+                        initialPage: 0),
+                    items: controller.listPark.value.map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return ParkCellItem(i, controller);
+                        },
+                      );
+                    }).toList(),
+                  ),
+                )),
           ],
         ),
       ),
@@ -84,7 +87,7 @@ class HomePage extends GetView<HomeController> {
 
     return Obx(() => controller.isLoading.value
         ? const Scaffold(
-            body: Expanded(child: Center(child: CircularProgressIndicator())))
+            body: SafeArea(child: Center(child: CircularProgressIndicator())))
         : Scaffold(
             backgroundColor: bgColor,
             body: getBody(),
@@ -135,15 +138,13 @@ class HomePage extends GetView<HomeController> {
   }
 }
 
-class ParkCellItem extends StatelessWidget {
-  final ParkingModel data;
-
-  const ParkCellItem(this.data, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width * 0.99,
+Widget ParkCellItem(ParkingModel data, HomeController controller) {
+  return GestureDetector(
+    onTap: () {
+      controller.mapController.move(data.getLatLng, 17);
+    },
+    child: Container(
+        width: Get.width * 0.99,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         padding: const EdgeInsets.all(20),
         decoration: radiusContainer(Colors.white.withOpacity(0.7)),
@@ -184,6 +185,6 @@ class ParkCellItem extends StatelessWidget {
               ],
             )
           ],
-        ));
-  }
+        )),
+  );
 }

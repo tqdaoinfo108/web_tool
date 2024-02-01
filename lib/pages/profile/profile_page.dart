@@ -4,18 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gvb_charge/model/user_model.dart';
 import 'package:gvb_charge/pages/home/home_controller.dart';
+import 'package:gvb_charge/share/pressable.dart';
 
 import '../../share/colors.dart';
 import '../../share/text_style.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return GetX<HomeController>(builder: (controller) {
@@ -54,40 +50,50 @@ class _ProfilePageState extends State<ProfilePage> {
                                 mediumTextStyle.copyWith(color: mainFontColor),
                           ),
                           const SizedBox(height: 10),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(CupertinoIcons.eye_slash_fill,
-                                  color: grey),
-                              const SizedBox(width: 10),
-                              Text("***********", style: smallTextStyle),
-                              const SizedBox(width: 20),
-                              GestureDetector(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 8),
-                                  decoration: BoxDecoration(
-                                      color: primary,
-                                      borderRadius: BorderRadius.circular(25),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: grey.withOpacity(0.03),
-                                          spreadRadius: 10,
-                                          blurRadius: 3,
-                                          // changes position of shadow
-                                        ),
-                                      ]),
-                                  child: Row(
-                                    children: [
-                                      const Icon(CupertinoIcons.add_circled),
-                                      const SizedBox(width: 8),
-                                      Text("Nộp tiền", style: smallTextStyle),
-                                    ],
+                          Obx(() => Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => controller.onChangeHidMoney(),
+                                    child: Icon(
+                                        controller.isHideMoney.value
+                                            ? CupertinoIcons.eye_fill
+                                            : CupertinoIcons.eye_slash_fill,
+                                        color: grey),
                                   ),
-                                ),
-                              ),
-                            ],
-                          )
+                                  const SizedBox(width: 10),
+                                  Text(
+                                      controller.isHideMoney.value
+                                          ? "***********"
+                                          : "1234567",
+                                      style: smallTextStyle),
+                                  const SizedBox(width: 20),
+                                  // GestureDetector(
+                                  //   child: Container(
+                                  //     padding: const EdgeInsets.symmetric(
+                                  //         horizontal: 10, vertical: 8),
+                                  //     decoration: BoxDecoration(
+                                  //         color: primary,
+                                  //         borderRadius: BorderRadius.circular(25),
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             color: grey.withOpacity(0.03),
+                                  //             spreadRadius: 10,
+                                  //             blurRadius: 3,
+                                  //             // changes position of shadow
+                                  //           ),
+                                  //         ]),
+                                  //     child: Row(
+                                  //       children: [
+                                  //         const Icon(CupertinoIcons.add_circled),
+                                  //         const SizedBox(width: 8),
+                                  //         Text("Nộp tiền", style: smallTextStyle),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ))
                         ],
                       ),
                       Container(
