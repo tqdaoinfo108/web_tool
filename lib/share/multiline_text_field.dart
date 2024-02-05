@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:gvb_charge/share/colors.dart';
 import 'package:gvb_charge/share/text_style.dart';
 
@@ -45,11 +45,11 @@ class MultilineTextField extends StatelessWidget {
       this.minLines});
 
   final kInputFocusBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6.r),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(color: primary, width: 1));
 
   final kInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6.r),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(color: Color(0xFFE2E4EA), width: 1));
 
   @override
@@ -68,7 +68,7 @@ class MultilineTextField extends StatelessWidget {
         border: kInputBorder,
         enabledBorder: kInputBorder,
         focusedBorder: kInputFocusBorder,
-        contentPadding: REdgeInsets.all(18),
+        contentPadding: EdgeInsets.all(18),
         // prefixIcon: Padding(
         //    padding: REdgeInsets.symmetric(vertical: 17.h, horizontal: 14.w),
         //   child: prefixIcon,

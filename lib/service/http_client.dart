@@ -37,14 +37,26 @@ class HttpClient extends GetConnect {
       get("api/parkinglot/get?keySearch=$keySearch&page=$page&limit=$limit&Latitude=${lat ?? 0}&Longitude=${lng ?? 0}",
           decoder: ParkingModel.getListParkingResponse);
 
-  Future<Response<ResponseBase<List<BookingDetail>>>> getListBook(
-          int status, int page) =>
-      get("api/booking/gethistorybooking",
-          query: {
-            "userID": UserModel.getUSerID,
-            "status": status,
-            "page": page,
-            "limit": maxPageLimit
-          },
-          decoder: BookingDetail.getListBookingDetailResponse);
+  Future<Response<ResponseBase<BookingDetail>>> postBookingInsert(
+          String qrCode, int time) =>
+      post("api/booking/insert",
+          BookingDetail().toInsertBookingJson(qrCode, time),
+          decoder: BookingDetail.getBookingDetailResponse);
+
+  Future<Response<ResponseBase<BookingDetail>>> postUpdateStatusBooking(
+          String bookingID, int time) =>
+      get("api/booking/updatestatus?bookID=$bookingID",
+          decoder: BookingDetail.getBookingDetailResponse);
+
+  Future<
+      Response<
+          ResponseBase<
+              List<BookingDetail>>>> getListBookingHistory(int page) => get(
+      "api/booking/gethistorybooking?userID=${UserModel.getUSerID}&status=-100&page=$page&limit=20",
+      decoder: BookingDetail.getListBookingDetailResponse);
+
+  Future<Response<ResponseBase<BookingDetail>>> getEndBooking(
+          int bookingID) =>
+      get("api/booking/end?bookID=$bookingID",
+          decoder: BookingDetail.getBookingDetailResponse);
 }

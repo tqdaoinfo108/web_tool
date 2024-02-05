@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gvb_charge/pages/login/login_controller.dart';
 import 'package:get/get.dart';
+import 'package:gvb_charge/share/c_button.dart';
 import 'package:gvb_charge/share/pressable.dart';
 import 'package:gvb_charge/share/text_style.dart';
 
@@ -104,23 +105,13 @@ class LoginPage extends GetView<LoginController> {
                       ),
                     )),
                 const SizedBox(height: 20),
-                Pressable(
-                  onPress: () async {
-                    await controller.postLogin();
-                  },
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
-                    decoration: BoxDecoration(
-                        color: buttoncolor,
-                        borderRadius: BorderRadius.circular(25)),
-                    child: Center(
-                      child: Text(
-                        "Đăng nhập",
-                        style: smallTextStyle.copyWith(color: white),
-                      ),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: buttonDefault(
+                    "Đăng nhập",
+                    () async {
+                      await controller.postLogin();
+                    },
                   ),
                 ),
                 const SizedBox(height: 62),

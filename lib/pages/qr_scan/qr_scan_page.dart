@@ -6,12 +6,13 @@ import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScanPage extends GetView<QRScanController> {
+  const QRScanPage({super.key});
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mobile Scanner'),
+        title: const Text('Scan'),
         actions: [
           IconButton(
             color: Colors.white,
@@ -55,6 +56,9 @@ class QRScanPage extends GetView<QRScanController> {
           final Uint8List? image = capture.image;
           for (final barcode in barcodes) {
             debugPrint('Barcode found! ${barcode.rawValue}');
+            if (barcode.rawValue?.length == 12) {
+              Get.offNamed("/pick_time_booking", arguments: barcode.rawValue);
+            }
           }
         },
       ),

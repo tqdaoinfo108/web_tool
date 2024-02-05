@@ -40,6 +40,15 @@ class BookingDetail {
   int? statusCPowerSocket;
   int? timeStopCharging;
 
+  String get getStartTime =>
+      DateTime.fromMillisecondsSinceEpoch((dateStart ?? 0) * 1000)
+          .toString()
+          .substring(0, 16);
+
+  String get getEndTime => dateEnd == 0
+      ? "Chưa xác định"
+      : "${(((dateEnd ?? 0) - (dateStart ?? 0)) / 60).round()}phút";
+
   BookingDetail(
       {this.bookId,
       code,
@@ -136,8 +145,7 @@ class BookingDetail {
     }
   }
 
-  static ResponseBase<BookingDetail> getBookingDetailResponse(
-      Map<String, dynamic> json) {
+  static ResponseBase<BookingDetail> getBookingDetailResponse(json) {
     if (json["message"] == null) {
       return ResponseBase<BookingDetail>(
           data: BookingDetail.fromJson(json["data"]));
@@ -147,13 +155,12 @@ class BookingDetail {
   }
 
   Map<String, dynamic> toInsertBookingJson(
-      String qrCode, int parkingID2, int timeStopCharging) {
+      String qrCode, int timeStopCharging) {
     final Map<String, dynamic> auth = <String, dynamic>{};
     auth["UserID"] = GetS.init.read("user_id") ?? 0;
     auth["UUSerID"] = "";
 
     final Map<String, dynamic> data = <String, dynamic>{};
-    data["ParkingID"] = parkingID2;
     data["QRCode"] = qrCode;
     data["TimeZoneName"] = "vi";
     data["TimeStopCharging"] = timeStopCharging;

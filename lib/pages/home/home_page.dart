@@ -74,7 +74,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
       buildBodyHome(),
-      const HistoryPage(),
+      historyPage(controller),
       const ProfilePage(),
     ];
 
@@ -96,7 +96,7 @@ class HomePage extends GetView<HomeController> {
                 width: 80,
                 height: 80,
                 child: FloatingActionButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Get.toNamed("/qr_scan");
                   },
                   backgroundColor: white,

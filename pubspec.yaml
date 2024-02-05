@@ -25,8 +25,9 @@ dev_dependencies:
   lottie: ^3.0.0
   geolocator: ^10.1.0
   mobile_scanner: ^3.5.6
-  flutter_screenutil: ^5.9.0
+  responsive_sizer: ^3.3.0
   get_storage: ^2.1.1
+  number_mask: ^1.0.4
 
 flutter:
 

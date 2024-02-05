@@ -152,6 +152,9 @@ class ProfilePage extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                        onTap: () async {
+                          await Get.toNamed("/add_money");
+                        },
                         leading: const Icon(CupertinoIcons.creditcard,
                             color: primary),
                         title: Text("Nộp tiền", style: xSmallTextStyle),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 final heading1 = GoogleFonts.plusJakartaSans(
   fontSize: 32.sp,
@@ -25,22 +25,22 @@ final largeTextStyle = GoogleFonts.plusJakartaSans(
   color: const Color(0xFF160D07),
 );
 final smallTextStyle = GoogleFonts.plusJakartaSans(
-  fontSize: 14.sp,
-  fontWeight: FontWeight.w600,
-  color: const Color(0xFF160D07),
-);
-final mediumTextStyle = GoogleFonts.plusJakartaSans(
   fontSize: 16.sp,
   fontWeight: FontWeight.w600,
   color: const Color(0xFF160D07),
 );
+final mediumTextStyle = GoogleFonts.plusJakartaSans(
+  fontSize: 17.sp,
+  fontWeight: FontWeight.w600,
+  color: const Color(0xFF160D07),
+);
 final xSmallTextStyle = GoogleFonts.plusJakartaSans(
-  fontSize: 12.sp,
+  fontSize: 14.sp,
   fontWeight: FontWeight.w400,
   color: const Color(0xFF767D88),
 );
 final xXSmallTextStyle = GoogleFonts.plusJakartaSans(
-  fontSize: 10.sp,
+  fontSize: 11.sp,
   fontWeight: FontWeight.w400,
   color: const Color(0xFF767D88),
 );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:gvb_charge/model/booking_detail_model.dart';
 import 'package:gvb_charge/model/user_model.dart';
 import 'package:gvb_charge/share/constant.dart';
 // ignore: unused_import
@@ -29,6 +30,7 @@ class HomeController extends GetXControllerCustom
   Rx<UserModel?> userData = Rx<UserModel?>(null);
   RxList<ParkingModel> listPark = RxList([]);
   RxList<Marker> listMarker = RxList([]);
+  RxList<BookingDetail> listBooking = RxList([]);
 
   final HttpClient _httpClient;
   HomeController(this._httpClient);
@@ -48,7 +50,8 @@ class HomeController extends GetXControllerCustom
 
   init() async {
     isLoading.value = true;
-    await Future.wait([getUserProfile(), getListPark()]);
+    await Future.wait(
+        [getUserProfile(), getListPark(), getListHistoryBooking(1)]);
     isLoading.value = false;
   }
 
@@ -63,11 +66,22 @@ class HomeController extends GetXControllerCustom
 
   setTabs(index) {
     pageIndex.value = index;
-    update();
+    if (index == 1) {
+      getListHistoryBooking(1);
+    }
   }
 
   Future getUserProfile() async {
     userData.value = (await _httpClient.getProfile()).body?.data;
+  }
+
+  Future getListHistoryBooking(int page) async {
+    if (page == 1) {
+      listBooking.value.clear();
+    }
+    listBooking.value =
+        (await _httpClient.getListBookingHistory(page)).body?.data ?? [];
+    listBooking.refresh();
   }
 
   Future getListPark() async {
@@ -78,14 +92,24 @@ class HomeController extends GetXControllerCustom
       listMarker.value.add(
         Marker(
             point: item.getLatLng,
-            width: 48,
-            height: 48,
+            width: 32,
+            height: 32,
             child: Image.asset("assets/images/f.png")),
       );
     }
 
     listPark.refresh();
     listMarker.refresh();
+  }
+
+  Future onEndBooking(int bookingID) async {
+    try {
+      var result = await _httpClient.getEndBooking(bookingID);
+      if (result.isOk) {
+        await getListHistoryBooking(1);
+        Get.snackbar("Thông báo", "Kết thúc sạc thành công");
+      }
+    } finally {}
   }
 
   Future<Position> _determinePosition() async {
